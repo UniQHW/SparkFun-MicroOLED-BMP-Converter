@@ -18,11 +18,11 @@ The usage syntax is very open as I wanted to avoid limiting down users, however 
 Syntax:
 
 ```
-sfobmp [ <your bmp> | -i | -ndef | -c ] [ <your bmp> | -i | -ndef | -c  | -ui | -redef | -uc ]  [ <your bmp> | -i | -ndef | -c  | -ui | -redef | -uc ] ...
+sfobmp [ <your bmp> | -i | -ndef | -c | -a ] [ <your bmp> | -i | -ndef | -c  | -ui | -redef | -uc ]  [ <your bmp> | -i | -ndef | -c  | -a | -ui | -redef | -uc ] ...
 
 or
 
-sfobmp [ <your bmp> | --invert | --noDefine | --combine ] [ <your bmp> | --invert | --noDefine | --combine  | -undoInvert | -reDefine | -undoCombine ] ...
+sfobmp [ <your bmp> | --invert | --noDefine | --combine | --animation ] [ <your bmp> | --invert | --noDefine | --combine | --animation | -undoInvert | -reDefine | -undoCombine ] ...
 
 ```
 
@@ -30,16 +30,18 @@ Flags :
 
 ```
 
-Enable invert Image (Lighter becomes OFF, darker becomes ON):					-i    || --invert
-Disable invert Images (If invert has been enabled):						-ui   || --undoInvert
+Enable invert Image (Lighter becomes OFF, darker becomes ON):				  -i    || --invert
+Disable invert Images (If invert has been enabled):					  -ui   || --undoInvert
 
-Disable definition of MicroOled object in header:						-ndef || --noDefine
-(Re)enable definition of MicroOled object in header:						-rdef || --reDefine
+Disable definition of MicroOled object in header:				          -ndef || --noDefine
+(Re)enable definition of MicroOled object in header:				          -rdef || --reDefine
 
-Generate draw functions for multiple bitmaps into only one header (does't work with -ca):	-c    || --combine
-Disable combining (If enabled):									-uc   || --undoCombine
+Generate draw functions for multiple bitmaps into only one header (does't work with -a or -ca)  -c    || --combine
+Disable combining (If enabled):								  -uc   || --undoCombine
 
-Generate draw functions for multiple bitmaps into a single array (doesn't work with -c):	-ca   || --combineArray
+Enable animation combine. Combines into a single function with a delay argument (not compatible with -c or -ca)  -a || --animation
+
+Generate draw functions for multiple bitmaps into a single array (doesn't work with -c or -a):  -ca   || --combineArray
 
 ```
 
@@ -64,6 +66,10 @@ Converting multiple bmps combined in one header
 
 sfobmp -c your.bmp yoursecond.bmp
 
+
+Converting multiple bmps into a animation header
+
+sfobmp -a your.bmp yoursecond.bmp
 
 Converting inverted, then uninverted bmp
 

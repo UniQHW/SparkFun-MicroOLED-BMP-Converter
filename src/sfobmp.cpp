@@ -25,10 +25,13 @@ bool invertFlag = false;
 bool defFlag = true;
 bool combineFlag = false;
 bool combineArrayFlag = false;
+bool animationFlag = false;
 
 int cFlagCurrentBMPCount;
 string combineName; // Stores name of combine file (Set to NULL until next BMP on cmdline is reached)
 int combineFlagState = 0; // Stores state of combine flag - Start as OFF
+
+int aFlagCurrentBMPCount;
 
 bool scanArg(string param);
 
@@ -120,9 +123,19 @@ int main (int argv, char *argc[])
 			if (bmpCount > 1 && combineFlag)
 				sfoheader << endl << endl; // Create space between functions
 
-			sfoheader
-			<< tab << "void draw" + name + "()" << endl
-			<< tab << "{" << endl;
+			if (animationFlag && aFlagCurrentBMPCount + 1 == bmpCount)
+			{
+				sfoheader
+				<< tab << "void draw" + name + "(int ms)" << endl
+				<< tab << "{" << endl;
+			}
+
+			else if (!animationFlag)
+			{
+				sfoheader
+				<< tab << "void draw" + name + "()" << endl
+				<< tab << "{" << endl;
+			}
 
 			sfobmp.dispFlags();
 
@@ -154,8 +167,19 @@ int main (int argv, char *argc[])
 			}
 
 			sfoheader
-			<< tab << tab << "oled.display();" << endl
-			<< tab << "}" << endl;
+			<< tab << tab << "oled.display();" << endl;
+
+			if (animationFlag)
+			{
+				sfoheader
+				<< endl << tab << tab << "delay(ms);"
+				<< endl << tab << tab << "oled.clear(PAGE);";
+				if (run == argv - 1)
+					sfoheader << tab << "}" << endl;
+			}
+
+			else
+				sfoheader << tab << "}" << endl;
 
 			if (!combineFlag || run == argv - 1)
 			{
@@ -223,8 +247,8 @@ bool scanArg(string param)
 			defFlag = true;
 
 	/* Enable exporting functions of multiple bitmaps into a single header file */
-	else if (param == "-c" && combineArrayFlag == false ||
-		 param == "--combine" && combineArrayFlag == false) {
+	else if (param == "-c" && combineArrayFlag == false && !animationFlag ||
+		 param == "--combine" && combineArrayFlag == false && !animationFlag) {
 			cFlagCurrentBMPCount = bmpCount; // Stores how many bitmaps have already been counted during flag entrance
 			combineFlag = true;
 		}
@@ -239,12 +263,23 @@ bool scanArg(string param)
 
 			else if (combineArrayFlag)
 				combineArrayFlag = false;
+
+			else if (animationFlag)
+				animationFlag = false;
 		}
 
 	/* Enable exporting an ARRAY of functions of multiple butmaps into a single header file (Disable with -!c) */
-	else if (param == "-ca" && combineFlag == false ||
-		 param == "--combineArray" && combineFlag != false)
+	else if (param == "-ca" && !combineFlag && !animationFlag ||
+		 param == "--combineArray" && !combineFlag &&  !animationFlag)
 			combineArrayFlag = true;
+
+	else if (param == "-a" && !combineFlag ||
+		param == "--animationFlag" && !combineFlag)
+		{
+			aFlagCurrentBMPCount = bmpCount; // Stores how many bitmaps have already been counted during flag entrance			
+			animationFlag = true;
+			combineFlag = true;
+		}
 
 	/* Invalid flag/order */
 	else
