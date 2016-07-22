@@ -74,7 +74,7 @@ uint8_t getByteDec (string path, int line)
 	{
 		cout << "Error: " +  bmpPath + " not found" << endl;
 		exit(EXIT_FAILURE);
-		return NULL;
+		return 0;
 	}
 }
 
@@ -101,7 +101,7 @@ char getByteChar(string path, int line)
 		cout << "Error: " +  bmpPath + " not found" << endl;
 		exit(EXIT_FAILURE);
 
-		return NULL;
+		return 0;
 	}
 }
 
