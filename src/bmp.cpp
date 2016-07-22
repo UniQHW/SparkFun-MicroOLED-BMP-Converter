@@ -126,11 +126,11 @@ void BMP24_BGR::generateMap ()
 
 void BMP_MONOCHROME::generateMap()
 {
-		PXL_MONOCHROME passpxl;
+	PXL_MONOCHROME passpxl;
 
-		passpxl.state = invert;
+        bool antiState = invert == true ? true : false;
 
-        invert = invert == true ? true : false;
+	passpxl.state = antiState;
 
         monochromemap.clear(); // Clear monochrome map before generating it
 
@@ -148,13 +148,13 @@ void BMP_MONOCHROME::generateMap()
 			if (byteCount == byteCountLimit)
 			{
 				monochromemap.push_back(passpxl);
-				passpxl.state = invert;
+				passpxl.state = antiState;
 				byteCount = 0;
 			}
 
-			if (getByteDec(binpath, i) >=	 127.5 && passpxl.state == invert)
+			if (getByteDec(binpath, i) >=	 127.5 && passpxl.state == antiState)
 			{
-				passpxl.state = invert ? 0 : 1;
+				passpxl.state = antiState ? 0 : 1;
 			}
 
 			byteCount ++;
