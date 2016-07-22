@@ -85,8 +85,6 @@ sfobmp -i your.bmp -ui yoursecond.bmp
 
 - converting 16 bit bmps may cause issues (For now 24-32bit bmps work guaranteed)
 
-- size limit (Just don't try to import bigger files than 64x48 please, it's not worth your time ;) )
-
 - Paths (bmp must be in same dir as sfobmp)
 ```
 

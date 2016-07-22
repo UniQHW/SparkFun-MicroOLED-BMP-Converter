@@ -38,18 +38,24 @@ BMP::BMP()
 		     pxlh[i].getByte(binpath, 0X16 + i); // Pixel Height
 		  bitmask[i].getByte(binpath, 0x36 + i); // Bitmask layout
 	}
+
+	if (byteArrayDec(4, pxlw) > 64 || byteArrayDec(4, pxlh) > 48)
+	{
+		cout << "Resolution too big max 64 x 48!" << endl;
+		exit(EXIT_FAILURE);
+	}
 }
 
 void BMP::dispFlags()
 {
 	int ID[2] = {identifier[0].dec(), identifier[1].dec()};
-    int SZ = byteArrayDec(4, size);
-    int PXLOS = byteArrayDec(4, pxloffset);
-    int BPP = byteArrayDec(2, bpp);
-    int DIBS = byteArrayDec(4, DIBSize);
+	int SZ = byteArrayDec(4, size);
+	int PXLOS = byteArrayDec(4, pxloffset);
+	int BPP = byteArrayDec(2, bpp);
+	int DIBS = byteArrayDec(4, DIBSize);
 	int PXW = byteArrayDec(4, pxlw);
 	int PXH = byteArrayDec(4, pxlh);
-    int BM[4] = {bitmask[0].dec(), bitmask[1].dec(), bitmask[2].dec(), bitmask[3].dec()};
+	int BM[4] = {bitmask[0].dec(), bitmask[1].dec(), bitmask[2].dec(), bitmask[3].dec()};
 
 	char IDS1(ID[0]);
 	char IDS2(ID[1]);
@@ -66,8 +72,8 @@ void BMP::dispFlags()
         cout <<   "Pixel Offset\t: " << PXLOS << endl;
         cout << "Bits Per Pixel\t: " << BPP   << endl;
         cout <<     "Identifier\t: " << DIBS  << endl;
-		cout <<    "Pixel Width\t: " << PXW   << endl;
-		cout <<   "Pixel Height\t: " << PXH   << endl;
+	cout <<    "Pixel Width\t: " << PXW   << endl;
+	cout <<   "Pixel Height\t: " << PXH   << endl;
         cout <<       "Bit Mask\t: " << BM[0] << " | " <<  BM[1] << " | " << BM[2] << " | " << BM[3] << " | " << BMS1 << BMS2 << BMS3 << BMS4 << endl;
 }
 
