@@ -43,9 +43,11 @@ string name; 	// Stores bmp name
 
 string hguard;
 
+string slash = "/";
+
 string tab = "\t";
-string sidecomment = "\/\/";
-string comment(string input) {return "\/\* " + input + " \*\/";}
+string sidecomment = slash + slash;
+string comment(string input) {return slash + "* " + input + " *\\";}
 
 int main (int argv, char *argc[])
 {
