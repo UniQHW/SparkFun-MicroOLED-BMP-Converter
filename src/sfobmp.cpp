@@ -68,6 +68,10 @@ int main (int argv, char *argc[])
 		/* On -c */
 		if (combineFlagState == 1)
 		{
+			/* Check if file already exists */
+			sfoheader.open("generated-" + combineName + ".h", ios::out | ios::trunc); // Overwrites it to 0;
+			sfoheader.close();
+
 			combineFlagState = 2; // Indicate header has been generated
 		}
 
@@ -202,7 +206,6 @@ int main (int argv, char *argc[])
 	cout << endl << "Processed " << bmpCount << " image(s)" << endl << endl;
 	return 0;
 }
-
 
 bool scanArg(string param)
 {
