@@ -47,7 +47,7 @@ string slash = "/";
 
 string tab = "\t";
 string sidecomment = slash + slash;
-string comment(string input) {return slash + "* " + input + " *\\";}
+string comment(string input) {return slash + "* " + input + " */";}
 
 int main (int argv, char *argc[])
 {
