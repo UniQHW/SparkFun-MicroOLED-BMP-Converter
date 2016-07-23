@@ -33,7 +33,8 @@ int combineFlagState = 0; // Stores state of combine flag - Start as OFF
 
 int aFlagCurrentBMPCount;
 
-bool scanArg(string param);
+string getName(string path); // Name filter
+bool scanArg(string param); // Argument sorter
 
 int bmpCount = 0; // Amount of bitmaps passed
 
@@ -207,6 +208,25 @@ int main (int argv, char *argc[])
 	return 0;
 }
 
+/* Name filter */
+string getName (string path)
+{
+	string processedName;
+	processedName = path.erase (path.size() - 4, path.size());
+
+	for (int i = processedName.size() - 1; i >= 0; i--)
+	{
+		/* On Path outside of current directory */
+		if (processedName[i] == '/')
+		{
+			processedName.erase (0, i + 1); // Short to name only
+			break; // Don't waste perfomance
+		}
+	}
+
+	return processedName;
+}
+
 bool scanArg(string param)
 {
 	if (param.size() > 4) // Avoid Logic error
@@ -222,7 +242,7 @@ bool scanArg(string param)
 
 		{
 			bmpPath = param;
-			name 	= bmpPath.erase (bmpPath.size() - 4, bmpPath.size());
+			name 	= getName(bmpPath);
 			bmpPath = param; // Reset back to param after erase
 			binPath = bmpPath;
 			bmpCount++;
