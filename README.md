@@ -30,16 +30,17 @@ Flags :
 
 ```
 
-Enable invert Image (Lighter becomes OFF, darker becomes ON):				  -i    || --invert
-Disable invert Images (If invert has been enabled):					  -ui   || --undoInvert
+Enable invert Image (Lighter becomes OFF, darker becomes ON):	                                  -i    || --invert
+Disable invert Images (If invert has been enabled):                                             -ui   || --undoInvert
 
-Disable definition of MicroOled object in header:				          -ndef || --noDefine
-(Re)enable definition of MicroOled object in header:				          -rdef || --reDefine
+Disable definition of MicroOled object in header:                                               -ndef || --noDefine
+(Re)enable definition of MicroOled object in header:                                            -rdef || --reDefine
 
 Generate draw functions for multiple bitmaps into only one header (does't work with -a or -ca)  -c    || --combine
-Disable combining (If enabled):								  -uc   || --undoCombine
+Disable combining (If enabled):								                                                  -uc   || --undoCombine
 
-Enable animation combine. Combines into a single function with a delay argument (not compatible with -c or -ca)  -a || --animation
+Enable animation combine. Combines into a single function with a delay argument (not compatible with -c or -ca)  
+                                                                                                -a || --animation
 
 Generate draw functions for multiple bitmaps into a single array (doesn't work with -c or -a):  -ca   || --combineArray
 
